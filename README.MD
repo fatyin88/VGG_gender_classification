@@ -26,9 +26,3 @@ You get get pre-trained VGG face network weight [here](https://drive.google.com/
 ## Others
 
 Multi-cropping can get a little improvement but consuming more time.
-
-## TODOS
-
-- [ ] merge gender and age estimation to one graph
-- [ ] upload yolo-face detection code
-
