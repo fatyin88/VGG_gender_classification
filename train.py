@@ -385,7 +385,7 @@ def inference(image):
     sess = tf.Session()
 
     # restore model
-    model_name = os.path.join(FLAGS.model_path, 'model.ckpt-3934')
+    model_name = os.path.join(FLAGS.model_path, FLAGS.model_name)
     saver = tf.train.import_meta_graph(model_name + '.meta')
     saver.restore(sess, model_name)
 
@@ -417,7 +417,13 @@ def inference(image):
             label += result
         label = np.argmax(label, axis=1)
     sess.close()
+    if np.any(label):
+      gender = 'Female'
+    else:
+      gender = 'Male'
+   
     print('label is ', label)
+    print(gender)
 
 
 def main(_):
