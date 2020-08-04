@@ -1,4 +1,4 @@
-# Gender and Age Classification
+# VGG Gender and Age Classification
 
 Using conv network to classify gender and age.
 
@@ -7,6 +7,12 @@ In paper [Age and Gender Classification using Convolutional Neural Networks](htt
 I reproduce their work in tensorflow and make some improvment.
 
 Dataset: [Adience Benchmark](https://www.openu.ac.il/home/hassner/Adience/data.html#agegender). About 20k images, 2 categories in gender, 8 categories in age.
+
+
+```
+origin from: https://github.com/zealerww/gender_age_classification
+
+```
 
 ## Experiments
 
