@@ -6,7 +6,6 @@ import cv2
 import shutil
 import datetime
 import vgg
-import cnn_model
 
 tf.app.flags.DEFINE_integer('class_num', 2, "Num of classes")
 tf.app.flags.DEFINE_integer('image_size', 227, "size of image.")
@@ -18,12 +17,12 @@ tf.app.flags.DEFINE_integer('val_batch_size', 64, "Num of each validation batch.
 tf.app.flags.DEFINE_integer('epoch_num', 100, "Num of epochs.")
 tf.app.flags.DEFINE_string('train_data_dir', './gender_data/train/', "Train data dir while images in")
 tf.app.flags.DEFINE_string('val_data_dir', './gender_data/validation/', "Validation data dir while images in")
-tf.app.flags.DEFINE_string('model_path', './gender_model/', "Path the model in")
+tf.app.flags.DEFINE_string('model_path', './gender_data/models/', "Path the model in")
 tf.app.flags.DEFINE_string('model_name', 'model.ckpt', "Model name")
 tf.app.flags.DEFINE_bool('restore', False, "If restore model from file")
 tf.app.flags.DEFINE_string('test_pic', './test.bmp', "Test picture.")
 tf.app.flags.DEFINE_string('char_dict', './char_dict.bin', "Char dict.")
-tf.app.flags.DEFINE_string('log_dir', './log_dir', "Tf summary log.")
+tf.app.flags.DEFINE_string('logg_dir', './log_dir', "Tf summary log.")
 tf.app.flags.DEFINE_integer('run_type', 0, "0 for traning;1 for testing all model;"
                                            "2 for testing single model;3 for inference")
 tf.app.flags.DEFINE_bool('multi_crop', False, "If using multi crop when testing")
@@ -171,13 +170,13 @@ def train():
         shutil.rmtree(FLAGS.model_path)
 
     # summary writer
-    if os.path.exists(FLAGS.log_dir + '/train'):
-        shutil.rmtree(FLAGS.log_dir + '/train')
-    if os.path.exists(FLAGS.log_dir + '/val'):
-        shutil.rmtree(FLAGS.log_dir + '/val')
+    if os.path.exists(FLAGS.logg_dir + '/train'):
+        shutil.rmtree(FLAGS.logg_dir + '/train')
+    if os.path.exists(FLAGS.logg_dir + '/val'):
+        shutil.rmtree(FLAGS.logg_dir + '/val')
 
-    train_writer = tf.summary.FileWriter(FLAGS.log_dir + '/train', sess.graph)
-    val_writer = tf.summary.FileWriter(FLAGS.log_dir + '/val')
+    train_writer = tf.summary.FileWriter(FLAGS.logg_dir + '/train', sess.graph)
+    val_writer = tf.summary.FileWriter(FLAGS.logg_dir + '/val')
 
     # start input enqueue threads.
     coord = tf.train.Coordinator()
@@ -402,7 +401,7 @@ def inference(image):
         image = cv2.resize(image, (FLAGS.input_size, FLAGS.input_size))
         image = np.expand_dims(image, axis=0)
         result = sess.run(predict_label, feed_dict={image_batch: image,
-                                                    label_batch: None,
+                                                    label_batch: False,
                                                     training_or_not: False})
         label = np.argmax(result, axis=1)
     else:
@@ -413,7 +412,7 @@ def inference(image):
         croped_images_batch = multi_crop(image)
         for images_batch in croped_images_batch:
             result = sess.run(predict_label, feed_dict={image_batch: images_batch,
-                                                        label_batch: None,
+                                                        label_batch: False,
                                                         training_or_not: False})
             label += result
         label = np.argmax(label, axis=1)
