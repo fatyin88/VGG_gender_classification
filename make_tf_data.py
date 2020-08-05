@@ -3,7 +3,9 @@ import cv2
 import numpy as np
 import os
 
-base_dir = '/home/hust/genderAndAge/data'
+
+# Put the downloaded data in the base_dir
+base_dir = '/content/gdrive/My Drive/AgeGenderClassification/data'
 files_list = ['fold_0_data.txt', 'fold_1_data.txt', 'fold_2_data.txt', 'fold_3_data.txt', 'fold_4_data.txt']
 
 img_size = 227
@@ -28,9 +30,7 @@ age_class = {'(0, 2)': 0,
              '(60, 100)': 7}
 gender_class = {'m': 0, 'f': 1}
 
-age_data = []
 gender_data = []
-age_gender_data = []
 
 prefix = ''
 for data in all_data:
@@ -76,35 +76,8 @@ for data in all_data:
     except Exception as e:
         print(data)
 
-print(len(age_data))
 print(len(gender_data))
-print(len(age_gender_data))
 
-
-def make_age_data(data):
-
-    count = 0
-    num_file = 2000
-    i = 0
-    while True:
-        writer = tf.python_io.TFRecordWriter('age' + str(i) + '.tfrecords')
-        for j in range(num_file):
-            if count == len(data):
-                break
-            label = data[count][1]
-
-            img = cv2.imread(data[count][0])
-            img = cv2.resize(img, (img_size, img_size))
-            if img is not None:
-                image_raw = img.tostring()
-                feature = {'label': tf.train.Feature(int64_list=tf.train.Int64List(value=[label])),
-                           'image_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_raw]))}
-                example = tf.train.Example(features=tf.train.Features(feature=feature))
-                writer.write(example.SerializeToString())
-            count += 1
-        i += 1
-        if count == len(data):
-            break
 
 
 def make_gender_data(data):
@@ -133,33 +106,6 @@ def make_gender_data(data):
             break
 
 
-def make_age_gender_data(data):
-
-    count = 0
-    num_file = 2000
-    i = 0
-    while True:
-        writer = tf.python_io.TFRecordWriter('age_gender' + str(i) + '.tfrecords')
-        for j in range(num_file):
-            if count == len(data):
-                break
-            age = data[count][1]
-            gender = data[count][2]
-
-            img = cv2.imread(data[count][0])
-            img = cv2.resize(img, (img_size, img_size))
-            if img is not None:
-                image_raw = img.tostring()
-                feature = {'age': tf.train.Feature(int64_list=tf.train.Int64List(value=[age])),
-                           'gender': tf.train.Feature(int64_list=tf.train.Int64List(value=[gender])),
-                           'image_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_raw]))}
-                example = tf.train.Example(features=tf.train.Features(feature=feature))
-                writer.write(example.SerializeToString())
-            count += 1
-        i += 1
-        if count == len(data):
-            break
 
 
 make_gender_data(gender_data)
-# make_age_data(gender_data)
