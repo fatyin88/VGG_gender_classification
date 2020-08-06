@@ -98,8 +98,6 @@ class DataReader:
 
         if self.is_training:
             image = tf.random_crop(image, [FLAGS.input_size, FLAGS.input_size, FLAGS.image_channel])
-            # image = scale_image(image)
-            # image = rotate_image(image)
             image = tf.image.random_flip_left_right(image)
             image = tf.image.random_brightness(image, max_delta=0.5)
             image = tf.image.random_contrast(image, 0.5, 1.5)
