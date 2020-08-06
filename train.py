@@ -17,7 +17,7 @@ tf.app.flags.DEFINE_integer('val_batch_size', 64, "Num of each validation batch.
 tf.app.flags.DEFINE_integer('epoch_num', 100, "Num of epochs.")
 tf.app.flags.DEFINE_string('train_data_dir', './gender_data/train/', "Train data dir while images in")
 tf.app.flags.DEFINE_string('val_data_dir', './gender_data/validation/', "Validation data dir while images in")
-tf.app.flags.DEFINE_string('model_path', './gender_data/models/', "Path the model in")
+tf.app.flags.DEFINE_string('model_path', './gender_models/', "Path the model in")
 tf.app.flags.DEFINE_string('model_name', 'model.ckpt', "Model name")
 tf.app.flags.DEFINE_bool('restore', False, "If restore model from file")
 tf.app.flags.DEFINE_string('test_pic', './test.bmp', "Test picture.")
