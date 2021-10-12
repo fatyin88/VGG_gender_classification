@@ -2,9 +2,9 @@
 
 Using conv network to classify gender. (My project only focus on Gender Classification) 
 
-In paper [Age and Gender Classification using Convolutional Neural Networks](https://www.openu.ac.il/home/hassner/projects/cnn_agegender/CNN_AgeGenderEstimation.pdf), author come up a model of conv netowrk to estimate gender and age.
+In paper [Age and Gender Classification using Convolutional Neural Networks](https://www.openu.ac.il/home/hassner/projects/cnn_agegender/CNN_AgeGenderEstimation.pdf), author come up a model of conv network to estimate gender and age.
 
-Knowing that using pre-trained VGG face network and fine tune fully connected layers can obtain a better performance than the CNN model mentioned in the paper above, I want to do an experiment to see if it can really outperform the original model.  
+Knowing that using pre-trained VGG face network and fine tune fully connected layers can obtain a better performance than the CNN model mentioned in the paper above, I would like to do an experiment to see if it can really outperform the original model.  
 
 Dataset: [Adience Benchmark](https://www.openu.ac.il/home/hassner/Adience/data.html#agegender). For this project, we’ll use the Adience dataset. This dataset serves as a benchmark for face photos and is inclusive of various real-world imaging conditions like noise, lighting, pose, and appearance. The images have been collected from Flickr albums and distributed under the Creative Commons (CC) license. It has a total of 26,580 photos of 2,284 subjects in eight age ranges (as mentioned above) and is about 1GB in size. The models we will use have been trained on this dataset.
 
